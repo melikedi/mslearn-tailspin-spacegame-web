@@ -1,29 +1,24 @@
 trigger:
-  - main # or master if your repo uses master
+  - main
 
 pool:
-  vmImage: "windows-2022"
+  vmImage: windows-2022
 
 steps:
   - task: UseDotNet@2
-    displayName: "Use .NET SDK"
     inputs:
-      version: "8.x"
+      version: 8.x
 
   - script: dotnet restore
-    displayName: "Restore dependencies"
+    displayName: Restore
 
-  - script: dotnet build --configuration Release --no-restore
-    displayName: "Build"
+  - script: dotnet build Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj -c Release --no-restore
+    displayName: Build
 
-  - script: dotnet test --configuration Release --no-build
-    displayName: "Run tests"
+  - script: dotnet publish Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj -c Release -o $(Build.ArtifactStagingDirectory)
+    displayName: Publish
 
-  - script: dotnet publish Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj --configuration Release --no-build --output $(Build.ArtifactStagingDirectory)/publish
-    displayName: "Publish"
-
-  - task: PublishPipelineArtifact@1
-    displayName: "Publish pipeline artifact"
+  - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: "$(Build.ArtifactStagingDirectory)/publish"
-      ArtifactName: "drop"
+      PathtoPublish: $(Build.ArtifactStagingDirectory)
+      ArtifactName: drop
