@@ -19,11 +19,11 @@ steps:
   - script: dotnet test --configuration Release --no-build
     displayName: "Run tests"
 
-  - script: dotnet publish --configuration Release --no-build --output $(Build.ArtifactStagingDirectory)
+  - script: dotnet publish --configuration Release --no-build --output $(Build.ArtifactStagingDirectory)/publish
     displayName: "Publish"
 
   - task: PublishPipelineArtifact@1
     displayName: "Publish pipeline artifact"
     inputs:
-      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)/publish"
       ArtifactName: "drop"
