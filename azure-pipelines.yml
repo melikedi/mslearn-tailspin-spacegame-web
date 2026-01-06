@@ -22,8 +22,8 @@ steps:
   - script: dotnet publish --configuration Release --no-build --output $(Build.ArtifactStagingDirectory)
     displayName: "Publish"
 
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish artifact"
+  - task: PublishPipelineArtifact@1
+    displayName: "Publish pipeline artifact"
     inputs:
       PathtoPublish: "$(Build.ArtifactStagingDirectory)"
       ArtifactName: "drop"
