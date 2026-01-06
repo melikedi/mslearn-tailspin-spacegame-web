@@ -19,7 +19,7 @@ steps:
   - script: dotnet test --configuration Release --no-build
     displayName: "Run tests"
 
-  - script: dotnet publish --configuration Release --no-build --output $(Build.ArtifactStagingDirectory)/publish
+  - script: dotnet publish Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj --configuration Release --no-build --output $(Build.ArtifactStagingDirectory)/publish
     displayName: "Publish"
 
   - task: PublishPipelineArtifact@1
